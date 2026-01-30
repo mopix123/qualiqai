@@ -573,15 +573,15 @@ export default function LoginForm({
 
         if (insertError) throw insertError;
 
-        router.push("/workspace/subscription");
+        router.push("/workspace/dashboard");
         return;
       }
 
-      // 4️⃣ Redirect by subscription
+      // 4️⃣ Redirect by dashboard
       if (userData.subscription_status === "active") {
         router.push("/workspace/dashboard");
       } else {
-        router.push("/workspace/subscription");
+        router.push("/workspace/dashboard");
       }
     } catch (err: any) {
       setMessage(err.message || "Login failed. Please try again.");

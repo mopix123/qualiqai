@@ -81,20 +81,6 @@
 //   )
 // }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // "use client"
 
 // import { useState } from "react"
@@ -196,6 +182,155 @@
 //   </div>
 // </div>
 
+//         <Button type="submit" className="w-full" disabled={loading}>
+//           {loading ? "Updating..." : "Update Password"}
+//         </Button>
+//       </form>
+//     </div>
+//   )
+// }
+
+// "use client"
+
+// import { JSX, useState } from "react"
+// import { useRouter } from "next/navigation"
+// import { Button } from "@/components/ui/button"
+// import { Input } from "@/components/ui/input"
+// import { Label } from "@/components/ui/label"
+// import { createClient } from "@/lib/client"
+// import { Eye, EyeOff, AlertCircle, CheckCircle2 } from "lucide-react"
+
+// // 🔔 Reusable AlertBox
+// function AlertBox({
+//   type,
+//   message,
+// }: {
+//   type: "success" | "error"
+//   message: string
+// }) {
+//   const baseStyle =
+//     "flex items-center p-3 mb-4 text-sm rounded-lg border"
+
+//   const styles: Record<string, string> = {
+//     success:
+//       "text-green-700 bg-green-50 border-green-300 dark:text-green-400 dark:bg-green-900/30 dark:border-green-800",
+//     error:
+//       "text-red-700 bg-red-50 border-red-300 dark:text-red-400 dark:bg-red-900/30 dark:border-red-800",
+//   }
+
+//   const icons: Record<string, JSX.Element> = {
+//     success: <CheckCircle2 className="w-5 h-5 mr-2" />,
+//     error: <AlertCircle className="w-5 h-5 mr-2" />,
+//   }
+
+//   return (
+//     <div className={`${baseStyle} ${styles[type]}`} role="alert">
+//       {icons[type]}
+//       <span>{message}</span>
+//     </div>
+//   )
+// }
+
+// export default function ResetPassword() {
+//   const supabase = createClient()
+//   const router = useRouter()
+
+//   const [password, setPassword] = useState("")
+//   const [confirmPassword, setConfirmPassword] = useState("")
+//   const [message, setMessage] = useState<{
+//     type: "success" | "error"
+//     text: string
+//   } | null>(null)
+//   const [loading, setLoading] = useState(false)
+
+//   const [showPassword, setShowPassword] = useState(false)
+//   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+
+//   async function handleReset(e: React.FormEvent) {
+//     e.preventDefault()
+
+//     if (password !== confirmPassword) {
+//       setMessage({ type: "error", text: "Passwords do not match." })
+//       return
+//     }
+
+//     setLoading(true)
+
+//     const { error } = await supabase.auth.updateUser({ password })
+
+//     if (error) {
+//       setMessage({ type: "error", text: error.message })
+//     } else {
+//       setMessage({
+//         type: "success",
+//         text: "Password updated successfully! Redirecting to dashboard...",
+//       })
+//       setTimeout(() => {
+//         router.push("/workspace/dashboard")
+//       }, 2000)
+//     }
+
+//     setLoading(false)
+//   }
+
+//   return (
+//     <div className="flex items-center justify-center h-screen">
+//       <form
+//         onSubmit={handleReset}
+//         className="w-96 p-6 border rounded-md shadow-md space-y-4"
+//       >
+//         <h1 className="text-xl font-bold">Reset Password</h1>
+
+//         {/* ✅ Show alert if message exists */}
+//         {message && <AlertBox type={message.type} message={message.text} />}
+
+//         {/* New Password */}
+//         <div className="grid gap-2 relative">
+//           <Label htmlFor="password">New Password</Label>
+//           <div className="relative">
+//             <Input
+//               id="password"
+//               type={showPassword ? "text" : "password"}
+//               required
+//               value={password}
+//               onChange={(e) => setPassword(e.target.value)}
+//               className="pr-10"
+//             />
+//             <button
+//               type="button"
+//               onClick={() => setShowPassword(!showPassword)}
+//               className="absolute inset-y-0 right-3 flex items-center text-gray-500"
+//             >
+//               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+//             </button>
+//           </div>
+//         </div>
+
+//         {/* Confirm Password */}
+//         <div className="grid gap-2 relative">
+//           <Label htmlFor="confirmPassword">Confirm Password</Label>
+//           <div className="relative">
+//             <Input
+//               id="confirmPassword"
+//               type={showConfirmPassword ? "text" : "password"}
+//               required
+//               value={confirmPassword}
+//               onChange={(e) => setConfirmPassword(e.target.value)}
+//               className="pr-10"
+//             />
+//             <button
+//               type="button"
+//               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+//               className="absolute inset-y-0 right-3 flex items-center text-gray-500"
+//             >
+//               {showConfirmPassword ? (
+//                 <EyeOff size={18} />
+//               ) : (
+//                 <Eye size={18} />
+//               )}
+//             </button>
+//           </div>
+//         </div>
 
 //         <Button type="submit" className="w-full" disabled={loading}>
 //           {loading ? "Updating..." : "Update Password"}
@@ -205,160 +340,186 @@
 //   )
 // }
 
+"use client";
 
+import Image from "next/image";
+import { JSX, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { createClient } from "@/lib/client";
+import { Eye, EyeOff, AlertCircle, CheckCircle2 } from "lucide-react";
 
-
-
-
-
-
-
-"use client"
-
-import { JSX, useState } from "react"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { createClient } from "@/lib/client"
-import { Eye, EyeOff, AlertCircle, CheckCircle2 } from "lucide-react"
-
-// 🔔 Reusable AlertBox
+/* 🔔 Reusable AlertBox */
 function AlertBox({
   type,
   message,
 }: {
-  type: "success" | "error"
-  message: string
+  type: "success" | "error";
+  message: string;
 }) {
-  const baseStyle =
-    "flex items-center p-3 mb-4 text-sm rounded-lg border"
+  const baseStyle = "flex items-center p-3 text-sm rounded-lg border";
 
-  const styles: Record<string, string> = {
+  const styles = {
     success:
       "text-green-700 bg-green-50 border-green-300 dark:text-green-400 dark:bg-green-900/30 dark:border-green-800",
     error:
       "text-red-700 bg-red-50 border-red-300 dark:text-red-400 dark:bg-red-900/30 dark:border-red-800",
-  }
+  };
 
   const icons: Record<string, JSX.Element> = {
     success: <CheckCircle2 className="w-5 h-5 mr-2" />,
     error: <AlertCircle className="w-5 h-5 mr-2" />,
-  }
+  };
 
   return (
     <div className={`${baseStyle} ${styles[type]}`} role="alert">
       {icons[type]}
       <span>{message}</span>
     </div>
-  )
+  );
 }
 
-export default function ResetPassword() {
-  const supabase = createClient()
-  const router = useRouter()
+export default function ResetPasswordPage() {
+  const supabase = createClient();
+  const router = useRouter();
 
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{
-    type: "success" | "error"
-    text: string
-  } | null>(null)
-  const [loading, setLoading] = useState(false)
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
 
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   async function handleReset(e: React.FormEvent) {
-    e.preventDefault()
+    e.preventDefault();
 
     if (password !== confirmPassword) {
-      setMessage({ type: "error", text: "Passwords do not match." })
-      return
+      setMessage({ type: "error", text: "Passwords do not match." });
+      return;
     }
 
-    setLoading(true)
+    setLoading(true);
 
-    const { error } = await supabase.auth.updateUser({ password })
+    const { error } = await supabase.auth.updateUser({ password });
 
     if (error) {
-      setMessage({ type: "error", text: error.message })
+      setMessage({ type: "error", text: error.message });
     } else {
       setMessage({
         type: "success",
-        text: "Password updated successfully! Redirecting to dashboard...",
-      })
+        text: "Password updated successfully! Redirecting...",
+      });
       setTimeout(() => {
-        router.push("/workspace/dashboard")
-      }, 2000)
+        router.push("/workspace/dashboard");
+      }, 2000);
     }
 
-    setLoading(false)
+    setLoading(false);
   }
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <form
-        onSubmit={handleReset}
-        className="w-96 p-6 border rounded-md shadow-md space-y-4"
-      >
-        <h1 className="text-xl font-bold">Reset Password</h1>
-
-        {/* ✅ Show alert if message exists */}
-        {message && <AlertBox type={message.type} message={message.text} />}
-
-        {/* New Password */}
-        <div className="grid gap-2 relative">
-          <Label htmlFor="password">New Password</Label>
-          <div className="relative">
-            <Input
-              id="password"
-              type={showPassword ? "text" : "password"}
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="pr-10"
+    <div className="grid min-h-svh lg:grid-cols-2">
+      {/* LEFT SIDE */}
+      <div className="flex flex-col gap-4 p-6 md:p-10">
+        {/* LOGO */}
+        <div className="flex justify-center gap-2 md:justify-start">
+          <a
+            href="https://qualiqai.com/"
+            className="flex items-center gap-2 font-medium text-2xl"
+          >
+            <Image
+              src="/Logo_quliqai.png"
+              alt="QualiQ AI Logo"
+              width={40}
+              height={40}
+              className="object-contain"
             />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute inset-y-0 right-3 flex items-center text-gray-500"
-            >
-              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-            </button>
-          </div>
+            QualiQ AI
+          </a>
         </div>
 
-        {/* Confirm Password */}
-        <div className="grid gap-2 relative">
-          <Label htmlFor="confirmPassword">Confirm Password</Label>
-          <div className="relative">
-            <Input
-              id="confirmPassword"
-              type={showConfirmPassword ? "text" : "password"}
-              required
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="pr-10"
-            />
-            <button
-              type="button"
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute inset-y-0 right-3 flex items-center text-gray-500"
-            >
-              {showConfirmPassword ? (
-                <EyeOff size={18} />
-              ) : (
-                <Eye size={18} />
-              )}
-            </button>
-          </div>
-        </div>
+        {/* FORM */}
+        <div className="flex flex-1 items-center justify-center">
+          <form
+            onSubmit={handleReset}
+            className="w-full max-w-sm space-y-4 border rounded-md p-6 shadow-sm"
+          >
+            <h1 className="text-2xl font-bold">Reset Password</h1>
+            <p className="text-sm text-muted-foreground">
+              Enter a new password for your account.
+            </p>
 
-        <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? "Updating..." : "Update Password"}
-        </Button>
-      </form>
+            {message && <AlertBox type={message.type} message={message.text} />}
+
+            {/* New Password */}
+            <div className="space-y-2">
+              <Label htmlFor="password">New Password</Label>
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-3 flex items-center text-muted-foreground"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+            </div>
+
+            {/* Confirm Password */}
+            <div className="space-y-2">
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <div className="relative">
+                <Input
+                  id="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  required
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute inset-y-0 right-3 flex items-center text-muted-foreground"
+                >
+                  {showConfirmPassword ? (
+                    <EyeOff size={18} />
+                  ) : (
+                    <Eye size={18} />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? "Updating..." : "Update Password"}
+            </Button>
+          </form>
+        </div>
+      </div>
+
+      {/* RIGHT SIDE IMAGE */}
+      <div className="bg-muted relative hidden lg:block">
+        <img
+          src="/loginandsignup.png"
+          alt="Reset password background"
+          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.5]"
+        />
+      </div>
     </div>
-  )
+  );
 }

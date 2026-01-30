@@ -1,22 +1,22 @@
-"use client"
+"use client";
 
-import { Input } from "@/components/ui/input"
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 
 type Props = {
-  search: string
-  setSearch: (v: string) => void
-  gender: string
-  setGender: (v: string) => void
-  accent: string
-  setAccent: (v: string) => void
-}
+  search: string;
+  setSearch: (v: string) => void;
+  gender: string;
+  setGender: (v: string) => void;
+  accent: string;
+  setAccent: (v: string) => void;
+};
 
 export function VoiceToolbar({
   search,
@@ -32,11 +32,11 @@ export function VoiceToolbar({
         placeholder="Search voices..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-64 bg-zinc-900 border-zinc-800"
+        className="w-64"
       />
 
       <Select value={gender} onValueChange={setGender}>
-        <SelectTrigger className="w-36 bg-zinc-900 border-zinc-800">
+        <SelectTrigger className="w-36">
           <SelectValue placeholder="Gender" />
         </SelectTrigger>
         <SelectContent>
@@ -47,17 +47,16 @@ export function VoiceToolbar({
       </Select>
 
       <Select value={accent} onValueChange={setAccent}>
-        <SelectTrigger className="w-36 bg-zinc-900 border-zinc-800">
+        <SelectTrigger className="w-36">
           <SelectValue placeholder="Accent" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">All</SelectItem>
           <SelectItem value="American">American</SelectItem>
-          <SelectItem value="British">British</SelectItem>
           <SelectItem value="Indian">Indian</SelectItem>
           <SelectItem value="Canadian">Canadian</SelectItem>
         </SelectContent>
       </Select>
     </div>
-  )
+  );
 }

@@ -34,21 +34,19 @@ export function VoiceCard({ voice }: { voice: Voice }) {
   };
 
   return (
-    <Card className="bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3">
+    <Card className=" rounded-xl px-4 py-3">
       <audio ref={audioRef} src={voice.audioUrl} preload="none" />
 
       {/* LEFT SIDE: Avatar + Text */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3 min-w-0">
-          <div className="h-10 w-10 rounded-lg bg-rose-600 flex items-center justify-center text-sm font-semibold text-white shrink-0">
+          <div className="h-10 w-10 rounded-lg bg-rose-600 flex items-center justify-center text-sm font-semibold  shrink-0">
             {voice.gender === "Male" ? "M" : "F"}
           </div>
 
           <div className="flex flex-col leading-tight truncate">
-            <span className="text-sm font-medium text-white truncate">
-              {voice.name}
-            </span>
-            <span className="text-xs text-zinc-400 truncate">
+            <span className="text-sm font-medium  truncate">{voice.name}</span>
+            <span className="text-xs  truncate">
               {voice.gender} · {voice.accent}
             </span>
           </div>
@@ -57,7 +55,7 @@ export function VoiceCard({ voice }: { voice: Voice }) {
           size="icon"
           variant="ghost"
           onClick={togglePlay}
-          className="h-9 w-9 rounded-full border border-zinc-700 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white shrink-0"
+          className="h-9 w-9 rounded-full border shrink-0"
         >
           {playing ? <Pause size={18} /> : <Play size={18} />}
         </Button>

@@ -71,17 +71,6 @@
 //   }
 // }
 
-
-
-
-
-
-
-
-
-
-
-
 // import { NextRequest, NextResponse } from "next/server";
 // import Razorpay from "razorpay";
 // import { createClient } from "@supabase/supabase-js";
@@ -142,14 +131,6 @@
 //   }
 // }
 
-
-
-
-
-
-
-
-
 import { NextResponse } from "next/server";
 import Razorpay from "razorpay";
 import { createClient } from "@supabase/supabase-js";
@@ -161,7 +142,7 @@ const razorpay = new Razorpay({
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
+  process.env.SUPABASE_SERVICE_ROLE_KEY!,
 );
 
 export async function POST(req: Request) {
@@ -181,11 +162,16 @@ export async function POST(req: Request) {
       .single();
 
     if (userError || !user?.subscription_id) {
-      return NextResponse.json({ error: "User subscription not found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "User subscription not found" },
+        { status: 404 },
+      );
     }
 
     // ✅ Cancel the subscription in Razorpay
-    const subscription = await razorpay.subscriptions.cancel(user.subscription_id);
+    const subscription = await razorpay.subscriptions.cancel(
+      user.subscription_id,
+    );
 
     console.log("✅ Subscription canceled:", subscription.id);
 
@@ -199,7 +185,10 @@ export async function POST(req: Request) {
 
     if (updateError) {
       console.error("❌ Failed to update user:", updateError);
-      return NextResponse.json({ error: "Database update failed" }, { status: 500 });
+      return NextResponse.json(
+        { error: "Database update failed" },
+        { status: 500 },
+      );
     }
 
     return NextResponse.json({
@@ -211,18 +200,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import { NextResponse } from "next/server";
 // import type { SupabaseClient } from "@supabase/supabase-js";

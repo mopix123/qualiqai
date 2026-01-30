@@ -29,8 +29,6 @@
 //   };
 // }, []);
 
-
-
 //   const GeneratesubScriptionId=async()=>{
 //     const result = await axios.post('/api/create-subscription');
 //     console.log(result.data);
@@ -61,13 +59,8 @@
 //     rzp.open()
 //   }
 
-
-
-
-
 // //   const MakePayment = (subscriptionsId: string) => {
 // //   // Ensure the Razorpay script has loaded before creating an instance
-  
 
 // //   const options = {
 // //     key: process.env.NEXT_PUBLIC_RAZORPAY_LIVE_KEY, // Corrected: Added NEXT_PUBLIC_ prefix
@@ -89,7 +82,6 @@
 // //   rzp.open();
 // // }
 
-
 //   return (
 //       <SidebarInset>
 //         <SiteHeader />
@@ -103,26 +95,6 @@
 //       </SidebarInset>
 //   )
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // "use client"
 
@@ -245,16 +217,6 @@
 //     </SidebarInset>
 //   );
 // }
-
-
-
-
-
-
-
-
-
-
 
 // "use client"
 
@@ -389,10 +351,6 @@
 //     </SidebarInset>
 //   );
 // }
-
-
-
-
 
 // "use client"
 
@@ -553,20 +511,6 @@
 //     </SidebarInset>
 //   );
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // "use client"
 
@@ -736,22 +680,12 @@
 //   );
 // }
 
-
-
-
-
-
-
-
-
-
-
-"use client"
+"use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
-import axios from 'axios';
+import axios from "axios";
 import { toast } from "sonner";
 
 import { SiteHeader } from "@/components/site-header";
@@ -759,7 +693,12 @@ import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import PricingBlack from "@/components/usage-biiling-data";
 import { Separator } from "@/components/ui/separator";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from "@/components/ui/breadcrumb";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbList,
+  BreadcrumbPage,
+} from "@/components/ui/breadcrumb";
 
 // declare global {
 //   interface Window {
@@ -840,24 +779,30 @@ export default function SubscriptionPage() {
   // };
 
   return (
-     <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-          <div className="flex items-center gap-2 px-4">
-            <SidebarTrigger className="-ml-1" />
-            <Separator
-              orientation="vertical"
-              className="mr-2 data-[orientation=vertical]:h-4"
-            />
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Plan</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-          </div>
-        </header>
-             <PricingBlack/>
-      </SidebarInset>
+    <SidebarInset>
+      <header className="flex h-16 shrink-0 items-center gap-2 border-b">
+        <div className="flex items-center gap-2 px-4">
+          <SidebarTrigger className="-ml-1" />
+          <Separator
+            orientation="vertical"
+            className="mr-2 data-[orientation=vertical]:h-4"
+          />
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem />
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+      </header>
+      <div className="p-8">
+        <div className="pb-8">
+          <h3 className="text-2xl font-medium">Subscription</h3>
+        </div>
+
+        <div className="@container/main flex flex-1 flex-col gap-2">
+          <PricingBlack />
+        </div>
+      </div>
+    </SidebarInset>
   );
 }

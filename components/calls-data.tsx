@@ -484,6 +484,8 @@ export default function LeadsData() {
                 <a
                   href="/workspace/videotutorials"
                   className="flex justify-center items-center gap-2"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <SquarePlay /> Tutorials
                 </a>

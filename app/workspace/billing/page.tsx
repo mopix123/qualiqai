@@ -1,18 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // "use client";
 
 // import { useEffect, useState, useCallback } from "react";
@@ -238,7 +223,7 @@
 //             </CardHeader>
 //             <CardContent>
 //               {errorHistory && <p className="text-center text-red-500">{errorHistory}</p>}
-              
+
 //               {!errorHistory && (
 //                 <Table>
 //                   <TableHeader>
@@ -302,17 +287,6 @@
 //     </SidebarInset>
 //   );
 // }
-
-
-
-
-
-
-
-
-
-
-
 
 "use client";
 
@@ -392,7 +366,7 @@ export default function BillingPage() {
   const { user } = useAuth();
   const supabase = createClient();
   const [subscription, setSubscription] = useState<UserSubscription | null>(
-    null
+    null,
   );
   const [loadingSubscription, setLoadingSubscription] = useState(true);
   const [isCancelling, setIsCancelling] = useState(false);
@@ -412,7 +386,7 @@ export default function BillingPage() {
       const { data, error } = await supabase
         .from("users")
         .select(
-          "subscription_status, subscription_end_date, credits, credits_max, plan_id, plan_name"
+          "subscription_status, subscription_end_date, credits, credits_max, plan_id, plan_name",
         )
         .eq("id", user.id)
         .single();
@@ -444,7 +418,7 @@ export default function BillingPage() {
 
       // Optimistically update the UI
       setSubscription((prev) =>
-        prev ? { ...prev, subscription_status: "canceled" } : prev
+        prev ? { ...prev, subscription_status: "canceled" } : prev,
       );
 
       // close dialog after success
@@ -474,13 +448,15 @@ export default function BillingPage() {
   useEffect(() => {
     const fetchBillingHistory = async () => {
       try {
-        const { data } = await axios.get<BillingRecord[]>("/api/billing/history");
+        const { data } = await axios.get<BillingRecord[]>(
+          "/api/billing/history",
+        );
         setHistory(data);
       } catch (err: any) {
         console.error("Failed to fetch billing history:", err);
         setErrorHistory(
           err.response?.data?.error ||
-            "An error occurred while fetching your history."
+            "An error occurred while fetching your history.",
         );
       } finally {
         setLoadingHistory(false);
@@ -504,141 +480,160 @@ export default function BillingPage() {
 
   return (
     <SidebarInset>
-      <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+      <header className="flex h-16 shrink-0 items-center gap-2 border-b">
         <div className="flex items-center gap-2 px-4">
           <SidebarTrigger className="-ml-1" />
-          <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
+          <Separator
+            orientation="vertical"
+            className="mr-2 data-[orientation=vertical]:h-4"
+          />
           <Breadcrumb>
             <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbPage>Billing</BreadcrumbPage>
-              </BreadcrumbItem>
+              <BreadcrumbItem />
             </BreadcrumbList>
           </Breadcrumb>
         </div>
       </header>
 
-      <div className="min-h-screen flex justify-start">
-        <main className="p-4 md:p-6 space-y-6 w-5xl">
-          {/* Section 1: Manage Subscription */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Manage Subscription</CardTitle>
-              <CardDescription>
-                View your current plan details, credits, and manage your
-                subscription.
-              </CardDescription>
-            </CardHeader>
+      <div className="p-8">
+        <div className="pb-8">
+          <h3 className="text-2xl font-medium">Billing</h3>
+        </div>
+        <div className="min-h-screen flex justify-start">
+          <main className=" space-y-6 w-5xl">
+            {/* Section 1: Manage Subscription */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Manage Subscription</CardTitle>
+                <CardDescription>
+                  View your current plan details, credits, and manage your
+                  subscription.
+                </CardDescription>
+              </CardHeader>
 
-            <CardContent>
-              {/* Loading skeleton */}
-              {loadingSubscription ? (
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center p-4 border rounded-lg">
-                    <div className="space-y-2">
-                      <Skeleton className="h-5 w-[160px]" />
-                      <Skeleton className="h-4 w-[120px]" />
-                    </div>
-                    <Skeleton className="h-8 w-[140px]" />
-                  </div>
-
-                  <div className="p-4 border rounded-lg space-y-3">
-                    <Skeleton className="h-4 w-1/3" />
-                    <Skeleton className="h-3 w-full" />
-                    <Skeleton className="h-3 w-full" />
-                  </div>
-
-                  <Skeleton className="h-10 w-full" />
-                </div>
-              ) : subscription ? (
-                <div className="space-y-4">
-                  {/* Plan header */}
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-4 border rounded-lg">
-                    <div>
-                      <p className="text-sm text-muted-foreground">Active Plan</p>
-                      <p className="text-xl font-semibold">{planDisplayName}</p>
-                      <p className="text-sm text-muted-foreground mt-1">
-                        Status:{" "}
-                        <span className="capitalize">
-                          {getStatusText(subscription.subscription_status)}
-                        </span>
-                      </p>
+              <CardContent>
+                {/* Loading skeleton */}
+                {loadingSubscription ? (
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center p-4 border rounded-lg">
+                      <div className="space-y-2">
+                        <Skeleton className="h-5 w-[160px]" />
+                        <Skeleton className="h-4 w-[120px]" />
+                      </div>
+                      <Skeleton className="h-8 w-[140px]" />
                     </div>
 
-                    <div className="text-right">
-                      {/* Renew / expiry info */}
-                      {subscription.subscription_status === "active" && subscription.subscription_end_date && (
-                        <p className="text-sm text-muted-foreground">
-                          Renews on{" "}
-                          <span className="font-medium">
-                            {new Date(subscription.subscription_end_date).toLocaleDateString("en-US")}
-                          </span>
-                        </p>
-                      )}
-
-                      {subscription.subscription_status === "canceled" && subscription.subscription_end_date && (
-                        <p className="text-sm text-muted-foreground">
-                          Expires on{" "}
-                          <span className="font-medium">
-                            {new Date(subscription.subscription_end_date).toLocaleDateString("en-US")}
-                          </span>
-                        </p>
-                      )}
-
-                      {/* Cancel button */}
-                      {subscription.subscription_status === "active" && (
-                        <div className="mt-3">
-                          <Button
-                            variant="outline"
-                            onClick={() => setOpenCancelDialog(true)}
-                            disabled={isCancelling}
-                          >
-                            {isCancelling ? "Cancelling..." : "Cancel Subscription"}
-                          </Button>
-                        </div>
-                      )}
-
-                      {/* If canceled, show a small note */}
-                      {subscription.subscription_status === "canceled" && (
-                        <p className="text-sm text-muted-foreground mt-3">
-                          Your subscription has been canceled and will expire on the date above.
-                        </p>
-                      )}
+                    <div className="p-4 border rounded-lg space-y-3">
+                      <Skeleton className="h-4 w-1/3" />
+                      <Skeleton className="h-3 w-full" />
+                      <Skeleton className="h-3 w-full" />
                     </div>
-                  </div>
 
-                  {/* Credits progress */}
-                  <div className="p-4 border rounded-lg space-y-3">
-                    <div className="flex items-center justify-between">
+                    <Skeleton className="h-10 w-full" />
+                  </div>
+                ) : subscription ? (
+                  <div className="space-y-4">
+                    {/* Plan header */}
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-4 border rounded-lg">
                       <div>
-                        <p className="text-sm font-medium text-muted-foreground">
-                          {credits !== null && creditsMax !== null
-                            ? `${credits} / ${creditsMax} Minutes Used`
-                            : "Credit information not available."}
+                        <p className="text-sm text-muted-foreground">
+                          Active Plan
                         </p>
-                        
+                        <p className="text-xl font-semibold">
+                          {planDisplayName}
+                        </p>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Status:{" "}
+                          <span className="capitalize">
+                            {getStatusText(subscription.subscription_status)}
+                          </span>
+                        </p>
                       </div>
 
-                      <div className="text-sm text-muted-foreground">
-                        {/* show percentage */}
-                        {credits !== null && creditsMax !== null ? (
-                          <span className="font-medium">{progressValue}%</span>
-                        ) : null}
+                      <div className="text-right">
+                        {/* Renew / expiry info */}
+                        {subscription.subscription_status === "active" &&
+                          subscription.subscription_end_date && (
+                            <p className="text-sm text-muted-foreground">
+                              Renews on{" "}
+                              <span className="font-medium">
+                                {new Date(
+                                  subscription.subscription_end_date,
+                                ).toLocaleDateString("en-US")}
+                              </span>
+                            </p>
+                          )}
+
+                        {subscription.subscription_status === "canceled" &&
+                          subscription.subscription_end_date && (
+                            <p className="text-sm text-muted-foreground">
+                              Expires on{" "}
+                              <span className="font-medium">
+                                {new Date(
+                                  subscription.subscription_end_date,
+                                ).toLocaleDateString("en-US")}
+                              </span>
+                            </p>
+                          )}
+
+                        {/* Cancel button */}
+                        {subscription.subscription_status === "active" && (
+                          <div className="mt-3">
+                            <Button
+                              variant="outline"
+                              onClick={() => setOpenCancelDialog(true)}
+                              disabled={isCancelling}
+                            >
+                              {isCancelling
+                                ? "Cancelling..."
+                                : "Cancel Subscription"}
+                            </Button>
+                          </div>
+                        )}
+
+                        {/* If canceled, show a small note */}
+                        {subscription.subscription_status === "canceled" && (
+                          <p className="text-sm text-muted-foreground mt-3">
+                            Your subscription is canceled. All remaining credits
+                            are lost.
+                          </p>
+                        )}
                       </div>
                     </div>
 
-                    {/* Progress bar (uses shadcn Progress) */}
-                    {credits !== null && creditsMax !== null ? (
-                      <Progress value={progressValue} className="h-2" />
-                    ) : (
-                      <p className="text-sm text-muted-foreground">
-                        Credit information not available.
-                      </p>
-                    )}
-                  </div>
+                    {/* Credits progress */}
+                    <div className="p-4 border rounded-lg space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-medium text-muted-foreground">
+                            {credits !== null && creditsMax !== null
+                              ? `${credits} / ${creditsMax} Minutes Used`
+                              : "Credit information not available."}
+                          </p>
+                        </div>
 
-                  {/* Manual refresh */}
-                  {/* <div className="flex gap-3">
+                        <div className="text-sm text-muted-foreground">
+                          {/* show percentage */}
+                          {credits !== null && creditsMax !== null ? (
+                            <span className="font-medium">
+                              {progressValue}%
+                            </span>
+                          ) : null}
+                        </div>
+                      </div>
+
+                      {/* Progress bar (uses shadcn Progress) */}
+                      {credits !== null && creditsMax !== null ? (
+                        <Progress value={progressValue} className="h-2" />
+                      ) : (
+                        <p className="text-sm text-muted-foreground">
+                          Credit information not available.
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Manual refresh */}
+                    {/* <div className="flex gap-3">
                     <Button variant="outline" onClick={fetchSubscriptionStatus}>
                       Refresh Subscription Details
                     </Button>
@@ -657,113 +652,152 @@ export default function BillingPage() {
                       Refresh All
                     </Button>
                   </div> */}
-                </div>
-              ) : (
-                <p className="text-muted-foreground text-center">No subscription data found.</p>
-              )}
-            </CardContent>
-          </Card>
+                  </div>
+                ) : (
+                  <p className="text-muted-foreground text-center">
+                    No subscription data found.
+                  </p>
+                )}
+              </CardContent>
+            </Card>
 
-          {/* Cancel Confirmation Dialog */}
-          <Dialog open={openCancelDialog} onOpenChange={setOpenCancelDialog}>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle className="flex items-center gap-3">
-                  <span className="text-rose-500"><IconAlertTriangle /></span>
-                  Cancel Subscription
-                </DialogTitle>
-                <DialogDescription>
-                  Are you sure you want to cancel your subscription? You will
-                  keep access until the end of the current billing period.
-                </DialogDescription>
-              </DialogHeader>
+            {/* Cancel Confirmation Dialog */}
+            <Dialog open={openCancelDialog} onOpenChange={setOpenCancelDialog}>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle className="flex items-center gap-3">
+                    <span className="text-rose-500">
+                      <IconAlertTriangle />
+                    </span>
+                    Cancel Subscription
+                  </DialogTitle>
+                  <DialogDescription>
+                    Canceling will permanently delete all remaining credits.
+                    Please use your credits before canceling. This action cannot
+                    be undone.
+                  </DialogDescription>
+                </DialogHeader>
 
-              {/* Image + copy */}
-             
+                {/* Image + copy */}
 
-              <DialogFooter className="flex items-center justify-end gap-2">
-                <Button variant="outline" onClick={() => setOpenCancelDialog(false)}>
-                  Keep Subscription
-                </Button>
-                <Button
-                  variant="destructive"
-                  onClick={handleCancelSubscription}
-                  disabled={isCancelling}
-                >
-                  {isCancelling ? "Cancelling..." : "Confirm Cancel"}
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
+                <DialogFooter className="flex items-center justify-end gap-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => setOpenCancelDialog(false)}
+                  >
+                    Keep Subscription
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    onClick={handleCancelSubscription}
+                    disabled={isCancelling}
+                  >
+                    {isCancelling ? "Cancelling..." : "Confirm Cancel"}
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
 
-          {/* Section 2: Invoice History */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Invoice History</CardTitle>
-              <CardDescription>A record of all your past payments.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              {errorHistory && <p className="text-center text-red-500">{errorHistory}</p>}
+            {/* Section 2: Invoice History */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Invoice History</CardTitle>
+                <CardDescription>
+                  A record of all your past payments.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {errorHistory && (
+                  <p className="text-center text-red-500">{errorHistory}</p>
+                )}
 
-              {!errorHistory && (
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Invoice #</TableHead>
-                      <TableHead>Date</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead className="text-right">Amount</TableHead>
-                      <TableHead className="text-right">Action</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {loadingHistory ? (
-                      // --- Table Skeleton Rows ---
-                      [...Array(3)].map((_, i) => (
-                        <TableRow key={i}>
-                          <TableCell><Skeleton className="h-4 w-24" /></TableCell>
-                          <TableCell><Skeleton className="h-4 w-24" /></TableCell>
-                          <TableCell><Skeleton className="h-6 w-16 rounded-full" /></TableCell>
-                          <TableCell className="text-right"><Skeleton className="h-4 w-16 ml-auto" /></TableCell>
-                          <TableCell className="text-right"><Skeleton className="h-9 w-[105px] ml-auto" /></TableCell>
-                        </TableRow>
-                      ))
-                    ) : history.length > 0 ? (
-                      // --- Actual Table Content ---
-                      history.map((record) => (
-                        <TableRow key={record.id}>
-                          <TableCell className="font-medium">
-                            {`INV-${record.id.toString().padStart(4, "0")}`}
-                          </TableCell>
-                          <TableCell>{new Date(record.created_at).toLocaleDateString("en-US")}</TableCell>
-                          <TableCell>
-                            <Badge variant={record.status === "paid" || record.status === "captured" ? "default" : "secondary"}>
-                              {record.status}
-                            </Badge>
-                          </TableCell>
-                          <TableCell className="text-right">
-                            ${(record.amount / 100).toFixed(2)}
-                          </TableCell>
-                          <TableCell className="text-right">
-                            <Button asChild variant="outline" size="sm">
-                              <a href={record.short_url} target="_blank" rel="noopener noreferrer">
-                                View Invoice
-                              </a>
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      ))
-                    ) : (
+                {!errorHistory && (
+                  <Table>
+                    <TableHeader>
                       <TableRow>
-                        <TableCell colSpan={5} className="text-center">No billing history found.</TableCell>
+                        <TableHead>Invoice #</TableHead>
+                        <TableHead>Date</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead className="text-right">Amount</TableHead>
+                        <TableHead className="text-right">Action</TableHead>
                       </TableRow>
-                    )}
-                  </TableBody>
-                </Table>
-              )}
-            </CardContent>
-          </Card>
-        </main>
+                    </TableHeader>
+                    <TableBody>
+                      {loadingHistory ? (
+                        // --- Table Skeleton Rows ---
+                        [...Array(3)].map((_, i) => (
+                          <TableRow key={i}>
+                            <TableCell>
+                              <Skeleton className="h-4 w-24" />
+                            </TableCell>
+                            <TableCell>
+                              <Skeleton className="h-4 w-24" />
+                            </TableCell>
+                            <TableCell>
+                              <Skeleton className="h-6 w-16 rounded-full" />
+                            </TableCell>
+                            <TableCell className="text-right">
+                              <Skeleton className="h-4 w-16 ml-auto" />
+                            </TableCell>
+                            <TableCell className="text-right">
+                              <Skeleton className="h-9 w-[105px] ml-auto" />
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      ) : history.length > 0 ? (
+                        // --- Actual Table Content ---
+                        history.map((record) => (
+                          <TableRow key={record.id}>
+                            <TableCell className="font-medium">
+                              {`INV-${record.id.toString().padStart(4, "0")}`}
+                            </TableCell>
+                            <TableCell>
+                              {new Date(record.created_at).toLocaleDateString(
+                                "en-US",
+                              )}
+                            </TableCell>
+                            <TableCell>
+                              <Badge
+                                variant={
+                                  record.status === "paid" ||
+                                  record.status === "captured"
+                                    ? "default"
+                                    : "secondary"
+                                }
+                              >
+                                {record.status}
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="text-right">
+                              ${record.amount.toFixed(2)}
+                            </TableCell>
+                            <TableCell className="text-right">
+                              <Button asChild variant="outline" size="sm">
+                                <a
+                                  href={record.short_url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  View Invoice
+                                </a>
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      ) : (
+                        <TableRow>
+                          <TableCell colSpan={5} className="text-center">
+                            No billing history found.
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                )}
+              </CardContent>
+            </Card>
+          </main>
+        </div>
       </div>
     </SidebarInset>
   );
