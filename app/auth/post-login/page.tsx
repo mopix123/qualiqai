@@ -12,6 +12,9 @@ export default function PostLoginPage() {
     const checkSession = async () => {
       const { data } = await supabase.auth.getSession();
 
+      // if (data.session) {
+      //   router.replace("/workspace/dashboard?welcome=true");
+      // }
       if (data.session) {
         router.replace("/workspace/dashboard");
       }

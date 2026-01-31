@@ -25,8 +25,6 @@
 //       subscription_id: subscription_id,
 //     });
 
-    
-
 //     return NextResponse.json(invoices);
 
 //   } catch (error) {
@@ -39,24 +37,10 @@
 //   }
 // }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import { NextResponse } from "next/server";
 import Razorpay from "razorpay";
-import { createServerClient, type CookieOptions } from '@supabase/ssr';
-import { cookies } from 'next/headers';
+import { createServerClient, type CookieOptions } from "@supabase/ssr";
+import { cookies } from "next/headers";
 
 // Initialize Razorpay instance
 const instance = new Razorpay({
@@ -73,18 +57,29 @@ export async function GET() {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        get(name: string) { return cookieStore.get(name)?.value; },
-        set(name: string, value: string, options: CookieOptions) { cookieStore.set(name, value, options); },
-        remove(name: string, options: CookieOptions) { cookieStore.set(name, '', options); },
+        get(name: string) {
+          return cookieStore.get(name)?.value;
+        },
+        set(name: string, value: string, options: CookieOptions) {
+          cookieStore.set(name, value, options);
+        },
+        remove(name: string, options: CookieOptions) {
+          cookieStore.set(name, "", options);
+        },
       },
-    }
+    },
   );
 
   try {
     // 1. Authenticate the user
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
     if (authError || !user) {
-      return new NextResponse(JSON.stringify({ message: "Unauthorized" }), { status: 401 });
+      return new NextResponse(JSON.stringify({ message: "Unauthorized" }), {
+        status: 401,
+      });
     }
 
     // 2. Get the user's subscription_id from your database
@@ -97,7 +92,7 @@ export async function GET() {
     if (userError || !userData?.subscription_id) {
       throw new Error("No active subscription found for this user.");
     }
-    
+
     const subscriptionId = userData.subscription_id;
 
     // 3. Fetch all invoices for that specific subscription ID from Razorpay
@@ -107,27 +102,19 @@ export async function GET() {
     });
 
     return NextResponse.json(invoices);
-
   } catch (error) {
     console.error("RAZORPAY INVOICE FETCH ERROR:", error);
-    const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
+    const errorMessage =
+      error instanceof Error ? error.message : "An unknown error occurred";
     return new NextResponse(
-      JSON.stringify({ message: "Failed to fetch invoices.", error: errorMessage }),
-      { status: 500 }
+      JSON.stringify({
+        message: "Failed to fetch invoices.",
+        error: errorMessage,
+      }),
+      { status: 500 },
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
 
 // import { NextResponse } from "next/server";
 // import { createServerClient, type CookieOptions } from "@supabase/ssr";

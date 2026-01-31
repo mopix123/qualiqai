@@ -127,7 +127,7 @@ export default function VideoTutorials() {
 
           {/* Title */}
           <div className="p-1 pt-5">
-            <h3 className="text-md font-medium text-white">{video.title}</h3>
+            <h3 className="text-md font-medium ">{video.title}</h3>
           </div>
         </div>
       ))}

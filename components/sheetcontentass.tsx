@@ -210,11 +210,13 @@ import {
   SiCaldotcom,
   SiCalendly,
   SiElevenlabs,
+  SiFormstack,
   SiGodaddy,
   SiGooglemeet,
   SiHostinger,
   SiShopify,
   SiSquarespace,
+  SiTypeform,
   SiWebflow,
   SiWix,
   SiZoho,
@@ -271,29 +273,125 @@ const MODELS_BY_PROVIDER: Record<string, { label: string; value: string }[]> = {
 
 const VOICE_BY_PROVIDER: Record<string, { label: string; value: string }[]> = {
   _11labs: [
-    { label: "Will", value: "will" },
-    { label: "Manav", value: "manav" },
-    { label: "Sunny", value: "sunny" },
-    { label: "Sean", value: "sean" },
+    {
+      label: "Jessica Anne Bogart - Chatty and Friendly",
+      value: "Jessica Anne Bogart - Chatty and Friendly",
+    },
+    {
+      label: "Callie - Playful, Inviting and Friendly",
+      value: "Callie - Playful, Inviting and Friendly",
+    },
+    {
+      label: "Clara - Emotional, Dramatic and Polished",
+      value: "Clara - Emotional, Dramatic and Polished",
+    },
+    {
+      label: "Clara - Natural and Convincing",
+      value: "Clara - Natural and Convincing",
+    },
+    {
+      label: "Hope - Bubbly, Gossipy and Girly",
+      value: "Hope - Bubbly, Gossipy and Girly",
+    },
+    {
+      label: "Ivanna - Young, Versatile and Casual",
+      value: "Ivanna - Young, Versatile and Casual",
+    },
+    {
+      label: "Josh - Warm, Smooth and Steady",
+      value: "Josh - Warm, Smooth and Steady",
+    },
+    {
+      label: "Paul - Australian Professional Presenter",
+      value: "Paul - Australian Professional Presenter",
+    },
+    {
+      label: "Edward - Youthful, Confident and Bright",
+      value: "Edward - Youthful, Confident and Bright",
+    },
+    {
+      label: "Eryn - Genuine, Friendly and Natural",
+      value: "Eryn - Genuine, Friendly and Natural",
+    },
+    {
+      label: "Jess",
+      value: "Jess",
+    },
+    {
+      label: "Brad - Welcoming & Casual",
+      value: "Brad - Welcoming & Casual",
+    },
+    {
+      label: "Tom - Conversations & Books",
+      value: "Tom - Conversations & Books",
+    },
+    {
+      label: "Katie X - Call Center English Female",
+      value: "Katie X - Call Center English Female",
+    },
+    {
+      label: "exsUS4vynmxd379XN4yO",
+      value: "exsUS4vynmxd379XN4yO",
+    },
+    {
+      label: "Lena - Engaging and Relatable Mom",
+      value: "Lena - Engaging and Relatable Mom",
+    },
+    {
+      label: "Michael - Genuine and Approachable",
+      value: "Michael - Genuine and Approachable",
+    },
+    {
+      label: "Jenna - Warm, Relatable and Articulate",
+      value: "Jenna - Warm, Relatable and Articulate",
+    },
+
+    {
+      label: "Arthur - Composed, Kind and Natural",
+      value: "Arthur - Composed, Kind and Natural",
+    },
+    {
+      label: "Monika Sogam - Interactive and Modern",
+      value: "Monika Sogam - Interactive and Modern",
+    },
+    {
+      label: "Ranbir - Professional and Confident",
+      value: "Ranbir - Professional and Confident",
+    },
+    {
+      label: "Nikhil - Young and Conversational",
+      value: "Nikhil - Young and Conversational",
+    },
+    {
+      label: "Nila - Professional Guide",
+      value: "Nila - Professional Guide",
+    },
+    {
+      label: "Maya - Friendly and Cheerful",
+      value: "Maya - Friendly and Cheerful",
+    },
+    {
+      label: "Tripti - Calm and Experienced",
+      value: "Tripti - Calm and Experienced",
+    },
+    {
+      label: "Simran - Genuine and Sweet",
+      value: "Simran - Genuine and Sweet",
+    },
+    {
+      label: "Sapphire - Sweet, Youthful, and Clear",
+      value: "Sapphire - Sweet, Youthful, and Clear",
+    },
   ],
   openAI: [
-    { label: "Will", value: "will" },
-    { label: "Manav", value: "manav" },
-    { label: "Sunny", value: "sunny" },
-    { label: "Sean", value: "sean" },
+    { label: "Currently not available", value: "currently not available" },
   ],
-  vapi: [
-    { label: "Will", value: "will" },
-    { label: "Manav", value: "manav" },
-    { label: "Sunny", value: "sunny" },
-    { label: "Sean", value: "sean" },
-  ],
-  rimeAI: [
-    { label: "Will", value: "will" },
-    { label: "Manav", value: "manav" },
-    { label: "Sunny", value: "sunny" },
-    { label: "Sean", value: "sean" },
-  ],
+  // vapi: [
+  //   { label: "Currently not available", value: "currently not available" },
+  // ],
+  // rimeAI: [
+  //   { label: "Currently not available", value: "currently not available" },
+  // ],
 };
 
 /* ------------------ COMPONENT ------------------ */
@@ -348,8 +446,11 @@ export function SheetContentass() {
   const [websiteInfo, setWebsiteInfo] = useState({
     url: "",
     provider: "",
+    form_builder: "",
     username: "",
     password: "",
+    form_builder_username: "",
+    form_builder_password: "",
   });
 
   const isFormValid =
@@ -370,7 +471,10 @@ export function SheetContentass() {
     websiteInfo.url &&
     websiteInfo.provider &&
     websiteInfo.username &&
-    websiteInfo.password;
+    websiteInfo.form_builder &&
+    websiteInfo.password &&
+    websiteInfo.form_builder_username &&
+    websiteInfo.form_builder_password;
 
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -453,7 +557,6 @@ export function SheetContentass() {
 
       resetForm();
       setSheetOpen(false);
-      window.location.reload();
     } catch (err) {
       console.error(err);
       alert("Failed to save assistant");
@@ -924,12 +1027,6 @@ export function SheetContentass() {
                             <SelectItem value="openAI">
                               <VscAzure /> OpenAI
                             </SelectItem>
-                            <SelectItem value="vapi">
-                              <RiGeminiFill /> Vapi
-                            </SelectItem>
-                            <SelectItem value="rimeAI">
-                              <SiAnthropic /> Rime AI
-                            </SelectItem>
                           </SelectGroup>
                         </SelectContent>
                       </Select>
@@ -1055,6 +1152,44 @@ export function SheetContentass() {
                         </SelectContent>
                       </Select>
                     </div>
+                    <div className="grid w-full gap-3">
+                      <Label>Form builder provider</Label>
+
+                      <Select
+                        value={websiteInfo.form_builder}
+                        onValueChange={(value) =>
+                          setWebsiteInfo((prev) => ({
+                            ...prev,
+                            form_builder: value,
+                          }))
+                        }
+                        required
+                      >
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Form builder" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value="typeform">Typeform</SelectItem>
+                            <SelectItem value="formstack">Formstack</SelectItem>
+                            <SelectItem value="wufoo">Wufoo</SelectItem>
+                            <SelectItem value="jotform">Jotform</SelectItem>
+                            <SelectItem value="fillout">Fillout</SelectItem>
+                            <SelectItem value="zohoforms">
+                              Zoho Forms
+                            </SelectItem>
+                            <SelectItem value="hostingerform">
+                              Hostinger Form
+                            </SelectItem>
+                            <SelectItem value="vueform">Vueform</SelectItem>
+                            <SelectItem value="formbricks">
+                              Formbricks
+                            </SelectItem>
+                            <SelectItem value="custom">Custom</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
                   <div className="flex gap-3">
                     <div className="grid w-full gap-3">
@@ -1083,6 +1218,39 @@ export function SheetContentass() {
                           setWebsiteInfo((prev) => ({
                             ...prev,
                             password: e.target.value,
+                          }))
+                        }
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex gap-3">
+                    <div className="grid w-full gap-3">
+                      <Label>Form Builder username</Label>
+
+                      <Input
+                        type="text"
+                        placeholder="Email/username"
+                        value={websiteInfo.form_builder_username}
+                        onChange={(e) =>
+                          setWebsiteInfo((prev) => ({
+                            ...prev,
+                            form_builder_username: e.target.value,
+                          }))
+                        }
+                      />
+                    </div>
+                    <div className="grid w-full gap-3">
+                      <Label>Form Builder Password</Label>
+
+                      <Input
+                        type="text"
+                        placeholder="Password"
+                        value={websiteInfo.form_builder_password}
+                        onChange={(e) =>
+                          setWebsiteInfo((prev) => ({
+                            ...prev,
+                            form_builder_password: e.target.value,
                           }))
                         }
                       />

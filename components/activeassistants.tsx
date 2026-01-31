@@ -127,30 +127,55 @@ export function Activeassistants() {
       <div className="flex flex-col gap-y-4">
         <Tabs defaultValue="model">
           <Card className="w-full rounded-lg border p-1">
-            <TabsList className="bg-transparent px-4 gap-2">
-              <TabsTrigger value="model" className="text-md">
-                <Brain className="w-4 h-4" />
-                Model
-              </TabsTrigger>
-              <TabsTrigger value="information" className="text-md">
-                <ClipboardType className="w-4 h-4" />
-                Information
-              </TabsTrigger>
-              <TabsTrigger value="phone" className="text-md">
-                <Phone className="w-4 h-4" />
-                Phone number
-              </TabsTrigger>
-              <TabsTrigger value="intrigration" className="text-md">
-                <Blocks className="w-4 h-4" />
-                Intrigration
-              </TabsTrigger>
-            </TabsList>
+            {/* Scroll wrapper for mobile */}
+            <div className="overflow-x-auto">
+              <TabsList className="flex w-max min-w-full gap-2 bg-transparent px-2 sm:justify-start md:justify-center">
+                {/* MODEL */}
+                <TabsTrigger
+                  value="model"
+                  className="flex items-center gap-2 text-sm sm:text-md px-3 py-2"
+                >
+                  <Brain className="w-4 h-4" />
+                  <span className="hidden sm:inline">Model</span>
+                </TabsTrigger>
+
+                {/* INFORMATION */}
+                <TabsTrigger
+                  value="information"
+                  className="flex items-center gap-2 text-sm sm:text-md px-3 py-2"
+                >
+                  <ClipboardType className="w-4 h-4" />
+                  <span className="hidden sm:inline">Information</span>
+                </TabsTrigger>
+
+                {/* PHONE */}
+                <TabsTrigger
+                  value="phone"
+                  className="flex items-center gap-2 text-sm sm:text-md px-3 py-2"
+                >
+                  <Phone className="w-4 h-4" />
+                  <span className="hidden sm:inline">Phone number</span>
+                </TabsTrigger>
+
+                {/* INTEGRATION */}
+                <TabsTrigger
+                  value="intrigration"
+                  className="flex items-center gap-2 text-sm sm:text-md px-3 py-2"
+                >
+                  <Blocks className="w-4 h-4" />
+                  <span className="hidden sm:inline">Integration</span>
+                </TabsTrigger>
+              </TabsList>
+            </div>
           </Card>
-          <TabsContent value="model">
+          <TabsContent
+            value="model"
+            className=" max-h-[70vh] overflow-y-auto pr-2"
+          >
             <div className="grid gap-6 ">
               {assistants.map((assistant) => (
                 <div key={assistant.id} className="border-1 rounded-lg">
-                  <CardContent className="p-10">
+                  <CardContent className="p-6">
                     <div className="space-y-3">
                       {/* <div className="flex justify-start items-center gap-2">
                         <h3 className="font-bold text-2xl">{assistant.name}</h3>
@@ -281,12 +306,15 @@ export function Activeassistants() {
             </div>
           </TabsContent>
 
-          <TabsContent value="information">
+          <TabsContent
+            value="information"
+            className=" max-h-[70vh] overflow-y-auto pr-2"
+          >
             {/* RIGHT COLUMN */}
             <div className="grid gap-4">
               {assistants.map((assistant) => (
-                <div key={assistant.id} className="border-2 rounded-lg">
-                  <CardContent className="p-10">
+                <div key={assistant.id} className="border-1 rounded-lg">
+                  <CardContent className="p-6">
                     <div className="gap-3 grid">
                       {/* <div className="flex justify-start items-end gap-2">
                         <h3 className="font-bold text-2xl">Motionplex</h3>
@@ -400,12 +428,15 @@ export function Activeassistants() {
             </div>
           </TabsContent>
 
-          <TabsContent value="phone">
+          <TabsContent
+            value="phone"
+            className=" max-h-[70vh] overflow-y-auto pr-2"
+          >
             {/* RIGHT COLUMN */}
             <div className="grid gap-4">
               {assistants.map((assistant) => (
-                <div key={assistant.id} className="border-2 rounded-lg">
-                  <CardContent className="p-10">
+                <div key={assistant.id} className="border-1 rounded-lg">
+                  <CardContent className="p-6">
                     <div className="p-5 border-1 rounded-lg gap-3 grid">
                       <h3 className="text-lg font-semibold flex gap-2 items-center">
                         <Phone className="w-4 h-4" />
@@ -435,12 +466,15 @@ export function Activeassistants() {
             </div>
           </TabsContent>
 
-          <TabsContent value="intrigration">
+          <TabsContent
+            value="intrigration"
+            className=" max-h-[70vh] overflow-y-auto pr-2"
+          >
             {/* RIGHT COLUMN */}
             <div className="grid gap-4">
               {assistants.map((assistant) => (
-                <div key={assistant.id} className="border-2 rounded-lg">
-                  <CardContent className="p-10">
+                <div key={assistant.id} className="border-1 rounded-lg">
+                  <CardContent className="p-6">
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
                       <IntegrationCard
                         title="Cal.com"

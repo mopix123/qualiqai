@@ -41,6 +41,8 @@ import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { IconBell, IconGitBranch } from "@tabler/icons-react";
 import AudioPlayer from "@/components/AudioPlayer";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
 import {
   Card,
   CardContent,
@@ -393,15 +395,25 @@ export default function LeadsData() {
       },
     },
   ];
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+  });
 
   const table = useReactTable({
     data: leads,
     columns,
-    state: { globalFilter: searchTerm },
+    state: {
+      globalFilter: searchTerm,
+      pagination, // ✅ REQUIRED
+    },
+    onPaginationChange: setPagination, // ✅ REQUIRED
     onGlobalFilterChange: setSearchTerm,
+
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+
     globalFilterFn: (row, _columnId, filterValue) => {
       const value = `${row.original.customer_name} ${row.original.customer_email}`;
       return value.toLowerCase().includes(filterValue.toLowerCase());
@@ -443,7 +455,7 @@ export default function LeadsData() {
                     <TableHead key={header.id}>
                       {flexRender(
                         header.column.columnDef.header,
-                        header.getContext()
+                        header.getContext(),
                       )}
                     </TableHead>
                   ))}
@@ -484,6 +496,8 @@ export default function LeadsData() {
                 <a
                   href="/workspace/videotutorials"
                   className="flex justify-center items-center gap-2"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <SquarePlay /> Tutorials
                 </a>
@@ -501,13 +515,14 @@ export default function LeadsData() {
                     <TableHead key={header.id}>
                       {flexRender(
                         header.column.columnDef.header,
-                        header.getContext()
+                        header.getContext(),
                       )}
                     </TableHead>
                   ))}
                 </TableRow>
               ))}
             </TableHeader>
+
             <TableBody>
               {table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id}>
@@ -515,7 +530,7 @@ export default function LeadsData() {
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}
@@ -523,6 +538,52 @@ export default function LeadsData() {
               ))}
             </TableBody>
           </Table>
+
+          {/* ✅ Pagination OUTSIDE table */}
+          <div className="flex items-center justify-between px-4 py-3 border-t">
+            <Select
+              value={String(table.getState().pagination.pageSize)}
+              onValueChange={(value) => table.setPageSize(Number(value))}
+            >
+              <SelectTrigger className="w-[120px]">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {[10, 20, 30, 50].map((size) => (
+                  <SelectItem key={size} value={String(size)}>
+                    {size} rows
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <div className="text-sm text-muted-foreground">
+              Page <strong>{table.getState().pagination.pageIndex + 1}</strong>{" "}
+              of <strong>{table.getPageCount()}</strong>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => table.previousPage()}
+                disabled={!table.getCanPreviousPage()}
+              >
+                <ChevronLeft className="h-4 w-4" />
+                Previous
+              </Button>
+
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => table.nextPage()}
+                disabled={!table.getCanNextPage()}
+              >
+                Next
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
         </div>
       )}
     </div>

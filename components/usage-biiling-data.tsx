@@ -3,7 +3,6 @@
 // import { Badge } from "./ui/badge";
 // import { IconCalendarWeek, IconTrendingUp } from "@tabler/icons-react";
 
-
 // export default function PricingBlack() {
 //   const [users, setUsers] = useState(1500);
 //   const [billing, setBilling] = useState("monthly");
@@ -46,12 +45,6 @@
 //       </div>
 //   );
 // }
-
-
-
-
-
-
 
 // "use client";
 
@@ -152,17 +145,6 @@
 //   );
 // }
 
-
-
-
-
-
-
-
-
-
-
-
 // "use client";
 
 // import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "./ui/card";
@@ -170,8 +152,6 @@
 // import { IconCircleCheckFilled, IconCircleX } from "@tabler/icons-react";
 // import { Progress } from "@/components/ui/progress"
 // import { Badge } from "@/components/ui/badge"
-
-
 
 // export default function PricingWhite() {
 
@@ -360,18 +340,6 @@
 //     </div>
 //   );
 // }
-
-
-
-
-
-
-
-
-
-
-
-
 
 // "use client";
 
@@ -614,19 +582,9 @@
 //         ))}
 //       </div>
 //     </div>
-    
+
 //   );
 // }
-
-
-
-
-
-
-
-
-
-
 
 // "use client";
 
@@ -641,8 +599,8 @@
 // import { Badge } from "@/components/ui/badge";
 // import { Progress } from "@/components/ui/progress";
 // import { Skeleton } from "@/components/ui/skeleton"; // ✅ skeleton import
-// import { createClient } from "@/lib/client"; 
-// import { useAuth } from "@/contexts/AuthContext"; 
+// import { createClient } from "@/lib/client";
+// import { useAuth } from "@/contexts/AuthContext";
 // import { IconCircleCheckFilled, IconCircleX } from "@tabler/icons-react";
 // import { Button } from "./ui/button";
 // import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
@@ -914,7 +872,7 @@
 //                   </SheetDescription>
 //                 </SheetHeader>
 //              </SheetContent>
-//              </Sheet> 
+//              </Sheet>
 //             </CardFooter>
 //           </Card>
 //         ))}
@@ -922,23 +880,6 @@
 //     </div>
 //   );
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // "use client";
 
@@ -1123,18 +1064,6 @@
 //     </div>
 //   );
 // }
-
-
-
-
-
-
-
-
-
-
-
-
 
 // "use client";
 
@@ -1322,14 +1251,6 @@
 //     </div>
 //   );
 // }
-
-
-
-
-
-
-
-
 
 // "use client";
 
@@ -1522,20 +1443,6 @@
 //   );
 // }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // "use client";
 
 // import { useEffect, useState } from "react";
@@ -1721,15 +1628,7 @@
 //   );
 // }
 
-
-
-
-
 //////     right code ----------------------------
-
-
-
-
 
 // "use client";
 
@@ -1915,26 +1814,6 @@
 //     </div>
 //   );
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // "use client";
 
@@ -2187,22 +2066,6 @@
 //   );
 // }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // "use client";
 
 // import { useEffect, useState, useCallback } from "react";
@@ -2453,21 +2316,6 @@
 //     </div>
 //   );
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // "use client";
 
@@ -2921,18 +2769,6 @@
 //   );
 // }
 
-
-
-
-
-
-
-
-
-
-
-
-
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
@@ -2967,12 +2803,13 @@ export default function PricingPlans() {
 
   const plans = [
     {
-      id: "starter_plan",
-      name: "Starter Plan",
-      price: "$55 / Month",
+      id: "basic Plan",
+      name: "Basic Plan",
+      price: "$14 / Month",
       razorpayPlanId: process.env.NEXT_PUBLIC_RAZORPAY_PLAN_ID_STARTER,
       features: [
-        { text: "75 minutes of calls per month", included: true },
+        { text: "30 minutes of calls per month", included: true },
+        { text: "Auto meeting scheduling (limited)", included: true },
         { text: "24/7 AI call coverage", included: true },
         { text: "Real-time call logs", included: true },
         { text: "Prospect insights with recordings", included: true },
@@ -2985,10 +2822,11 @@ export default function PricingPlans() {
     {
       id: "pro_plan",
       name: "Pro Plan",
-      price: "$120 / Month",
+      price: "$60 / Month",
       razorpayPlanId: process.env.NEXT_PUBLIC_RAZORPAY_PLAN_ID_PRO,
       features: [
-        { text: "160 minutes of calls per month", included: true },
+        { text: "150 minutes of calls per month", included: true },
+        { text: "Auto meeting scheduling (limited)", included: true },
         { text: "24/7 AI call coverage", included: true },
         { text: "Real-time call logs", included: true },
         { text: "Prospect insights with recordings", included: true },
@@ -3001,10 +2839,11 @@ export default function PricingPlans() {
     {
       id: "growth_plan",
       name: "Growth Plan",
-      price: "$225 / Month",
+      price: "$240 / Month",
       razorpayPlanId: process.env.NEXT_PUBLIC_RAZORPAY_PLAN_ID_GROWTH,
       features: [
-        { text: "300 minutes of calls per month", included: true },
+        { text: "600 minutes of calls per month", included: true },
+        { text: "Auto meeting scheduling (limited)", included: true },
         { text: "24/7 AI call coverage", included: true },
         { text: "Real-time call logs", included: true },
         { text: "Prospect insights with recordings", included: true },
@@ -3024,7 +2863,7 @@ export default function PricingPlans() {
     document.body.appendChild(script);
     return () => {
       const razorpayScript = document.querySelector(
-        'script[src="https://checkout.razorpay.com/v1/checkout.js"]'
+        'script[src="https://checkout.razorpay.com/v1/checkout.js"]',
       );
       if (razorpayScript) document.body.removeChild(razorpayScript);
     };
@@ -3156,16 +2995,8 @@ export default function PricingPlans() {
 
   const formatTime = (secs: number) => `${Math.max(secs, 0)} sec`;
 
-
   return (
-    <div className="min-h-screen text-white px-6 flex-col justify-start">
-      <div className="mb-10 text-center md:text-left">
-        <h1 className="text-4xl font-bold mb-2">QualiQ AI</h1>
-        <p className="text-gray-400 text-lg">
-          Select the plan that best fits your needs.
-        </p>
-      </div>
-
+    <div className="min-h-screen text-white flex-col justify-start">
       <div className="max-w-7xl w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {plans.map((plan) => {
           const isActive =
@@ -3204,7 +3035,7 @@ export default function PricingPlans() {
                   </Button>
                 ) : (
                   <Button
-                    className="w-full bg-primary hover:bg-primary-dark text-white font-medium py-2 rounded-lg"
+                    className="w-full bg-primary hover:bg-primary-dark text-white font-medium py-2 rounded-lg cursor-pointer"
                     disabled={loadingPlan === plan.id || loadingSubscription}
                     onClick={() =>
                       startSubscription(plan.razorpayPlanId!, plan.id)

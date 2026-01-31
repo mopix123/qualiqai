@@ -257,10 +257,187 @@
 //   )
 // }
 
+// "use client";
+
+// import { useState } from "react";
+// import Link from "next/link";
+
+// import { cn } from "@/lib/utils";
+// import { createClient } from "@/lib/client";
+
+// import { Button } from "@/components/ui/button";
+// import { Input } from "@/components/ui/input";
+// import {
+//   Field,
+//   FieldDescription,
+//   FieldGroup,
+//   FieldLabel,
+//   FieldSeparator,
+// } from "@/components/ui/field";
+// import { FaGoogle } from "react-icons/fa";
+
+// export default function SignUpForm({
+//   className,
+//   ...props
+// }: React.ComponentProps<"form">) {
+//   const [fullName, setFullName] = useState("");
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [message, setMessage] = useState("");
+//   const [isSuccess, setIsSuccess] = useState(false);
+//   const [loading, setLoading] = useState(false);
+
+//   const supabase = createClient();
+
+//   async function handleSignUp(event: React.FormEvent) {
+//     event.preventDefault();
+//     setLoading(true);
+//     setMessage("");
+//     setIsSuccess(false);
+
+//     try {
+//       const { error } = await supabase.auth.signUp({
+//         email,
+//         password,
+//         options: {
+//           data: {
+//             full_name: fullName,
+//           },
+//         },
+//       });
+
+//       if (error) throw error;
+
+//       setIsSuccess(true);
+//       setMessage("Success! Please check your email to verify your account.");
+//     } catch (err: any) {
+//       setIsSuccess(false);
+//       setMessage(err.message || "Sign up failed. Please try again.");
+//     } finally {
+//       setLoading(false);
+//     }
+//   }
+//   async function handleGoogleLogin() {
+//     try {
+//       const { error } = await supabase.auth.signInWithOAuth({
+//         provider: "google",
+//         options: {
+//           redirectTo: `${window.location.origin}/auth/callback`,
+//         },
+//       });
+
+//       if (error) throw error;
+//     } catch (err: any) {
+//       setMessage(err.message || "Google login failed. Please try again.");
+//     }
+//   }
+
+//   return (
+//     <form
+//       onSubmit={handleSignUp}
+//       className={cn("flex flex-col gap-6", className)}
+//       {...props}
+//     >
+//       <FieldGroup>
+//         {/* Header */}
+//         <div className="flex flex-col items-center gap-1 text-center">
+//           <h1 className="text-2xl font-bold">Create your account</h1>
+//           <p className="text-muted-foreground text-sm">
+//             Get started with QualiQ AI
+//           </p>
+//         </div>
+
+//         {/* Message */}
+//         {message && (
+//           <div
+//             className={cn(
+//               "rounded-md p-3 text-sm text-center",
+//               isSuccess
+//                 ? "bg-green-50 border border-green-200 text-green-700"
+//                 : "bg-red-50 border border-red-200 text-red-600"
+//             )}
+//           >
+//             {message}
+//           </div>
+//         )}
+
+//         {/* Full Name */}
+//         <Field>
+//           <FieldLabel htmlFor="fullName">Full Name</FieldLabel>
+//           <Input
+//             id="fullName"
+//             type="text"
+//             placeholder="John Doe"
+//             required
+//             value={fullName}
+//             onChange={(e) => setFullName(e.target.value)}
+//           />
+//         </Field>
+
+//         {/* Email */}
+//         <Field>
+//           <FieldLabel htmlFor="email">Email</FieldLabel>
+//           <Input
+//             id="email"
+//             type="email"
+//             placeholder="m@example.com"
+//             required
+//             value={email}
+//             onChange={(e) => setEmail(e.target.value)}
+//           />
+//         </Field>
+
+//         {/* Password */}
+//         <Field>
+//           <FieldLabel htmlFor="password">Password</FieldLabel>
+//           <Input
+//             id="password"
+//             type="password"
+//             required
+//             value={password}
+//             onChange={(e) => setPassword(e.target.value)}
+//           />
+//         </Field>
+
+//         {/* Submit */}
+//         <Field>
+//           <Button type="submit" disabled={loading}>
+//             {loading ? "Creating account..." : "Create Account"}
+//           </Button>
+//         </Field>
+
+//         {/* Divider */}
+//         <FieldSeparator>Or continue with</FieldSeparator>
+
+//         {/* Footer */}
+//         <Field>
+//           <Button
+//             variant="outline"
+//             type="button"
+//             className="gap-2"
+//             onClick={handleGoogleLogin}
+//           >
+//             <FaGoogle className="w-4 h-4" />
+//             Login with Google
+//           </Button>
+//           <FieldDescription className="text-center">
+//             Already have an account?{" "}
+//             <Link href="/login" className="underline underline-offset-4">
+//               Sign in
+//             </Link>
+//           </FieldDescription>
+//         </Field>
+//       </FieldGroup>
+//     </form>
+//   );
+// }
+
 "use client";
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { FaGoogle } from "react-icons/fa";
 
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/client";
@@ -274,25 +451,27 @@ import {
   FieldLabel,
   FieldSeparator,
 } from "@/components/ui/field";
-import { FaGoogle } from "react-icons/fa";
 
 export default function SignUpForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
+  const router = useRouter();
+  const supabase = createClient();
+
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+
+  const [message, setMessage] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const supabase = createClient();
-
-  async function handleSignUp(event: React.FormEvent) {
-    event.preventDefault();
+  /* ---------------- EMAIL + PASSWORD SIGN UP ---------------- */
+  async function handleSignUp(e: React.FormEvent) {
+    e.preventDefault();
     setLoading(true);
-    setMessage("");
+    setMessage(null);
     setIsSuccess(false);
 
     try {
@@ -300,6 +479,8 @@ export default function SignUpForm({
         email,
         password,
         options: {
+          // ✅ CRITICAL: ensures correct redirect after email confirmation
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
           data: {
             full_name: fullName,
           },
@@ -309,7 +490,9 @@ export default function SignUpForm({
       if (error) throw error;
 
       setIsSuccess(true);
-      setMessage("Success! Please check your email to verify your account.");
+      setMessage(
+        "Account created! Please check your email to verify your account."
+      );
     } catch (err: any) {
       setIsSuccess(false);
       setMessage(err.message || "Sign up failed. Please try again.");
@@ -317,7 +500,12 @@ export default function SignUpForm({
       setLoading(false);
     }
   }
+
+  /* ---------------- GOOGLE OAUTH ---------------- */
   async function handleGoogleLogin() {
+    setLoading(true);
+    setMessage(null);
+
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
@@ -329,6 +517,7 @@ export default function SignUpForm({
       if (error) throw error;
     } catch (err: any) {
       setMessage(err.message || "Google login failed. Please try again.");
+      setLoading(false);
     }
   }
 
@@ -366,7 +555,6 @@ export default function SignUpForm({
           <FieldLabel htmlFor="fullName">Full Name</FieldLabel>
           <Input
             id="fullName"
-            type="text"
             placeholder="John Doe"
             required
             value={fullName}
@@ -409,17 +597,19 @@ export default function SignUpForm({
         {/* Divider */}
         <FieldSeparator>Or continue with</FieldSeparator>
 
-        {/* Footer */}
+        {/* Google */}
         <Field>
           <Button
             variant="outline"
             type="button"
             className="gap-2"
             onClick={handleGoogleLogin}
+            disabled={loading}
           >
             <FaGoogle className="w-4 h-4" />
-            Login with Google
+            Continue with Google
           </Button>
+
           <FieldDescription className="text-center">
             Already have an account?{" "}
             <Link href="/login" className="underline underline-offset-4">

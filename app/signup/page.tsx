@@ -10,33 +10,29 @@
 //   )
 // }
 
+import Image from "next/image";
 
-
-
-
-
-
-
-import Image from 'next/image';
-
-import SignUpForm from "@/components/signup-form"
+import SignUpForm from "@/components/signup-form";
 
 export default function SigninPage() {
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex justify-center gap-2 md:justify-start">
-          <a href="#" className="flex items-center gap-2 font-medium text-2xl">
+          <a
+            href="https://qualiqai.com/"
+            className="flex items-center gap-2 font-medium text-2xl"
+          >
             <div className="bg-transparent text-primary-foreground flex size-8 items-center justify-center rounded-md">
               <Image
-                                  src="/Logo_quliqai.png"
-                                  alt="QualiQ AI Logo"
-                                  width={50}
-                                  height={50}
-                                  className="object-contain"
-                                />
-                          </div>
-                          QualiQ AI
+                src="/Logo_quliqai.png"
+                alt="QualiQ AI Logo"
+                width={50}
+                height={50}
+                className="object-contain"
+              />
+            </div>
+            QualiQ AI
           </a>
         </div>
         <div className="flex flex-1 items-center justify-center">
@@ -53,5 +49,5 @@ export default function SigninPage() {
         />
       </div>
     </div>
-  )
+  );
 }
