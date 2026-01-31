@@ -121,13 +121,13 @@ export default function LeadAnalyticsDashboard() {
         const totalLeads = data.filter(
           (lead) =>
             lead.customer_name?.trim() !== "" &&
-            lead.customer_number?.trim() !== ""
+            lead.customer_number?.trim() !== "",
         ).length;
         const successfulCalls = data.filter(
-          (lead) => lead.call_id && lead.call_id.trim() !== ""
+          (lead) => lead.call_id && lead.call_id.trim() !== "",
         ).length;
         const failedCalls = data.filter(
-          (lead) => !lead.call_id || lead.call_id.trim() === ""
+          (lead) => !lead.call_id || lead.call_id.trim() === "",
         ).length;
         const totalCalls = successfulCalls + failedCalls;
         const successRate =
@@ -159,7 +159,7 @@ export default function LeadAnalyticsDashboard() {
         });
       } else {
         const diffDays = Math.ceil(
-          (to.getTime() - from.getTime()) / (1000 * 60 * 60 * 24)
+          (to.getTime() - from.getTime()) / (1000 * 60 * 60 * 24),
         );
         const prevFrom = new Date(from);
         prevFrom.setDate(from.getDate() - diffDays);
@@ -181,23 +181,23 @@ export default function LeadAnalyticsDashboard() {
         setPercentChange({
           totalLeads: calcChange(
             currentStats.totalLeads,
-            previousStats.totalLeads
+            previousStats.totalLeads,
           ),
           successfulCalls: calcChange(
             currentStats.successfulCalls,
-            previousStats.successfulCalls
+            previousStats.successfulCalls,
           ),
           failedCalls: calcChange(
             currentStats.failedCalls,
-            previousStats.failedCalls
+            previousStats.failedCalls,
           ),
           successRate: calcChange(
             currentStats.successRate,
-            previousStats.successRate
+            previousStats.successRate,
           ),
           totalDuration: calcChange(
             currentStats.totalDuration,
-            previousStats.totalDuration
+            previousStats.totalDuration,
           ),
         });
       }
@@ -219,7 +219,7 @@ export default function LeadAnalyticsDashboard() {
       const sorted = Object.entries(groupedByDate)
         .map(([date, values]) => ({ date, ...values }))
         .sort(
-          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
         );
       setChartData(sorted);
       setLoading(false);
