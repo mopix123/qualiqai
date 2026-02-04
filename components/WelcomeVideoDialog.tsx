@@ -26,25 +26,25 @@ export default function WelcomeVideoDialog({
         </DialogHeader>
 
         {/* YouTube Video */}
-        {/* <div className="aspect-video mb-4">
+        <div className="aspect-video mb-4">
           <iframe
             className="w-full h-full rounded-md"
-            src="https://www.youtube.com/embed/QwnJJXyrZhw?list=RDGMEMCMFH2exzjBeE_zAHHJOdxg"
+            src="https://www.youtube.com/embed/pmVd0NUpc5w?si=M0M7EZfDPKRGH43W"
             title="Welcome video"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           />
-        </div> */}
-        <div className="w-full max-w-full">
+        </div>
+        {/* <div className="w-full max-w-full">
           {" "}
           <Image
             src="https://img.youtube.com/vi/E6wjse3Vcac/maxresdefault.jpg"
             alt="Photo"
             width={800}
             height={800}
-            className="  justify-center items-center   rounded-md"
+            className="  justify-center items-center rounded-md"
           />{" "}
-        </div>
+        </div> */}
 
         <div className="flex justify-end">
           <Button variant="outline" onClick={onClose}>

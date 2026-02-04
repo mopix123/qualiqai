@@ -16,7 +16,7 @@ export default function PostLoginPage() {
       //   router.replace("/workspace/dashboard?welcome=true");
       // }
       if (data.session) {
-        router.replace("/workspace/dashboard");
+        router.replace("/workspace/dashboard?welcome=true");
       }
     };
 
