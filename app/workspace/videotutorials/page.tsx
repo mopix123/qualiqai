@@ -14,6 +14,7 @@ import { voices } from "@/lib/voices";
 import { VoiceCard } from "@/components/voice-card";
 import { VoiceToolbar } from "@/components/voice-toolbar";
 import VideoTutorials from "@/components/videotutorials";
+import SupportWidget from "@/components/support-widget";
 
 export default function Page() {
   const [search, setSearch] = useState("");
@@ -29,7 +30,7 @@ export default function Page() {
   });
   return (
     <SidebarInset>
-      <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 border-b-1">
+      <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 border-b-1 justify-between pr-2">
         <div className="flex items-center gap-2 px-4">
           <SidebarTrigger className="-ml-1" />
           <Separator
@@ -42,6 +43,7 @@ export default function Page() {
             </BreadcrumbList>
           </Breadcrumb>
         </div>
+        <SupportWidget />
       </header>
       <div className="p-8">
         <div className="pb-8">

@@ -336,6 +336,7 @@ import {
 } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
 import { IconAlertTriangle } from "@tabler/icons-react";
+import SupportWidget from "@/components/support-widget";
 
 // --- Interfaces ---
 interface UserSubscription {
@@ -480,7 +481,7 @@ export default function BillingPage() {
 
   return (
     <SidebarInset>
-      <header className="flex h-16 shrink-0 items-center gap-2 border-b">
+      <header className="flex h-16 shrink-0 items-center gap-2 border-b justify-between pr-2">
         <div className="flex items-center gap-2 px-4">
           <SidebarTrigger className="-ml-1" />
           <Separator
@@ -493,6 +494,7 @@ export default function BillingPage() {
             </BreadcrumbList>
           </Breadcrumb>
         </div>
+        <SupportWidget />
       </header>
 
       <div className="p-8">

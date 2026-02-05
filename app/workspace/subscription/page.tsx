@@ -699,6 +699,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb";
+import SupportWidget from "@/components/support-widget";
 
 // declare global {
 //   interface Window {
@@ -780,7 +781,7 @@ export default function SubscriptionPage() {
 
   return (
     <SidebarInset>
-      <header className="flex h-16 shrink-0 items-center gap-2 border-b">
+      <header className="flex h-16 shrink-0 items-center gap-2 border-b justify-between pr-2">
         <div className="flex items-center gap-2 px-4">
           <SidebarTrigger className="-ml-1" />
           <Separator
@@ -793,6 +794,7 @@ export default function SubscriptionPage() {
             </BreadcrumbList>
           </Breadcrumb>
         </div>
+        <SupportWidget />
       </header>
       <div className="p-8">
         <div className="pb-8">

@@ -2808,7 +2808,7 @@ export default function PricingPlans() {
       price: "$14 / Month",
       razorpayPlanId: process.env.NEXT_PUBLIC_RAZORPAY_PLAN_ID_STARTER,
       features: [
-        { text: "30 minutes of calls per month", included: true },
+        { text: "35 minutes of calls per month", included: true },
         { text: "Auto meeting scheduling (limited)", included: true },
         { text: "24/7 AI call coverage", included: true },
         { text: "Real-time call logs", included: true },
