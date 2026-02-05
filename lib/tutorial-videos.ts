@@ -1,9 +1,9 @@
 export const tutorialVideos = [
   {
     id: "intro",
-    title: "How to use QualiqAI",
-    youtubeId: "",
-    thumbnail: "https://img.youtube.com/vi/E6wjse3Vcac/maxresdefault.jpg",
+    title: "How to use QualiQ AI",
+    youtubeId: "pmVd0NUpc5w",
+    thumbnail: "https://img.youtube.com/vi/pmVd0NUpc5w/maxresdefault.jpg",
   },
   // {
   //   id: "workflows",
